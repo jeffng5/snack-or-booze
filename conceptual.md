@@ -28,4 +28,4 @@ Answer the following questions below:
 #### Class-based components utilize classes and require you to bind this to a function in order to use. Functional components are becoming the standard in React and involve writing functions that return desired output with HTML. They are classless. Functional components are newer to React. Class-based components rely on a render method while functional just relies on a return statement. 
 
 - What are some of the problems that hooks were designed to solve?
-#### Hooks were meant to solve repetition in code. class-based components are hard to program for and used in functional components  
+#### Hooks were meant to solve repetition in code. class-based components are hard to program. Hooks are used in functional components  
