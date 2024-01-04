@@ -9,7 +9,7 @@ Answer the following questions below:
   #### *A single-page application is an application involving client-side routing where the URL changes are client-side and the main page remains on screen.*
 
 - What are some differences between client side and server side routing?
-  #### *Client-side routing involves routing in the browser never hitting the backend which is more of the server-side routing which involves sending get/post requests to a server and having your routes go to the backend *
+  #### *Client-side routing involves routing in the browser never hitting the backend which is more of the server-side routing which involves sending get/post requests to a server     and having your routes go to the backend *
 
 - What are two ways of handling redirects with React Router? When would you use each?
   #### *One can use the Navigate component to redirect to another URL or the useNavigate hook*
