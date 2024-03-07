@@ -4,15 +4,12 @@ import "./App.css";
 import Home from "./Home";
 import SnackOrBoozeApi from "./Api";
 import NavBar from "./NavBar";
-import { Route, Switch } from "react-router-dom";
-import Menu from "./FoodMenu";
-import Snack from "./FoodItem";
-import Menu1 from "./DrinkMenu"
-import Drink from "./DrinkItem"
+import { Route, Routes, Switch } from "react-router-dom";
 import ItemForm from "./ItemForm"
 import db from "./db"
 import ItemComponent from "./ItemComponent";
 import MenuComponent from "./MenuComponent";
+
 
 console.log(db['drinks'])
 
@@ -21,8 +18,8 @@ function App() {
   const [snacks, setSnacks] = useState([]);
   const [isLoading1, setIsLoading1] = useState(true)
   const [drinks, setDrinks] = useState([]);
-  const [foods, setFoods] = useState([])
-  const makeItem = (food, description, recipe, serve) => {setFoods(foods => [...foods, {food, description, recipe, serve}])}
+  const [foods, setFoods] = useState()
+  const makeItem = (name, description, recipe, serve) => {setFoods(foods => [...foods, {name, description, recipe, serve}])}
   
   useEffect(() => {
     async function getSnacks() {
@@ -60,28 +57,34 @@ function App() {
             
             </Route>
             <Route exact path="/snacks">
-              <MenuComponent element= {0} title="Snacks" />
-              <MenuComponent element= {1} title="Snacks" />
+            {snacks.map(c => (
+              <MenuComponent
+              key={c.key}
+              name = {c.name}
+              id = {c.id}
+             />))}
             </Route>
             <Route exact path= "/drinks">
-             <MenuComponent element={2} title="Drinks" />
+            {drinks.map(c => (
+              <MenuComponent 
+              key = {c.key}
+              name= {c.name}
+              id={c.id}
+            />))}
             </Route>
            
-            <Route path="/snacks/:id">
-              <ItemComponent item={snacks}/>
-              </Route>
-            <Route path="/drinks/:id">
-              <ItemComponent item={drinks} />
-              </Route>
-            <Route exact path= "/addItem">
-              <ItemForm makeItem={makeItem}/>
-              <div>
-              {foods.map(({food, description, recipe, serve})=> <ItemComponent food={food} description={description} recipe={recipe} serve={serve}/>)}
-              </div>
-              </Route>
-            <Route>
+            <Route exact path='/snacks/id' element = {<ItemComponent key = {snacks.key}id = {snacks.id}
+            description ={snacks.description} recipe={snacks.description} serve= {snacks.serve}
+            />}/>
+        
+       
+            <Route exact path="/drinks/id" element= {<ItemComponent key = {drinks.key} id = {drinks.id} description= {drinks.description} recipe= {drinks.recipe} serve= {drinks.serve} />}/>
+           
+            <Route exact path= "/addItem" element = {<ItemForm />} />
+             
+            
               <p>Hmmm. I can't seem to find what you want.</p>
-            </Route>
+            
           </Switch>
         </main>
       </BrowserRouter>

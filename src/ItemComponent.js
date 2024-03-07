@@ -1,28 +1,36 @@
 import React from 'react';
-import { Redirect, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Card, CardBody, CardTitle, CardText } from "reactstrap";
 
 
 
-const ItemComponent = ({food, description, recipe, serve}) => {
- 
+const ItemComponent = ({key, id, description, recipe, serve }) => {
+
+
+
+
 return(    
-    <section>
+    <>
+    <CardTitle>
       <Card>
         <CardBody>
-          <CardTitle className="font-weight-bold text-center">
-            {food}
-          </CardTitle>
-          <CardText className="font-italic">{description}</CardText>
+    {key}
+        {id}
+        
+           
+      
+          <CardText className="font-italic">{description}
           <p>
             <b>Recipe:</b> {recipe}
           </p>
           <p>
             <b>Serve:</b> {serve}
           </p>
+          </CardText>
         </CardBody>
       </Card>
-    </section>
+      </CardTitle>
+    </>
   );
     
 }

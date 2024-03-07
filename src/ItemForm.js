@@ -1,40 +1,46 @@
 import React, { useState } from 'react'
-import App from "./App"
+import './App.css'
 
 
-function ItemForm({makeItem}) {
+const ItemForm = () =>  {
     const initialState =[]
-    const [item, setItem] = useState({initialState})
+    const [formData, setFormData] = useState(initialState)
 
     
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setItem(item => ({...item, [name]: value}))
+        setFormData(formData => ({...formData, [name]: value}))
      
      }
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        makeItem(item.food, item.description, item.recipe, item.serve)
-        setItem(initialState)
+        setFormData(formData.food, formData.description, formData.recipe, formData.serve)
+        setFormData(initialState)
     
     }
 
 
 return (
-
+<>
     <form>
         <label>Food Item:</label>
-        <input type="text" id="food" name="food" value= {item.food} onChange={handleChange}></input>
-        <label>Description:</label>
-        <input type="text" id="description" name= "description" value={item.description} onChange={handleChange}></input>
-        <label>Recipe:</label>
-        <input type="text" id="recipe" name= "recipe" value={item.recipe} onChange={handleChange}></input>
-        <label>Serve:</label>
-        <input type="text" id="serve" name= "serve" value={item.serve} onChange={handleChange}></input>
+
+        <div>
+        <input type="text" id="food" name="food" value={formData.food} placeholder= 'item' onChange={handleChange}></input>
+        </div>
+        <div>
+        <input type="text" id="description" name= "description" value={formData.description} placeholder= 'description' onChange={handleChange}></input>
+        </div>
+        <div>
+        <input type="text" id="recipe" name= "recipe" value={formData.recipe} placeholder = 'recipe' onChange={handleChange}></input>
+        </div>
+        <div>
+        <input type="text" id="serve" name= "serve" value={formData.serve} placeholder ='serve' onChange={handleChange}></input>
+        </div>
         <button onClick={handleSubmit}>Add Item</button>
     </form>
-
+    </>
 )
 
 }
