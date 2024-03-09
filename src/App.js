@@ -1,93 +1,79 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Home from "./Home";
 import SnackOrBoozeApi from "./Api";
 import NavBar from "./NavBar";
-import { Route, Routes, Switch } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import ItemForm from "./ItemForm"
 import db from "./db"
 import ItemComponent from "./ItemComponent";
-import MenuComponent from "./MenuComponent";
+import MenuComponentSnack from "./MenuComponentSnack";
+import MenuComponentDrink from './MenuComponentDrink';
 
 
-console.log(db['drinks'])
 
-function App() {
-  const [isLoading, setIsLoading] = useState(true);
+const App = () => {
+
   const [snacks, setSnacks] = useState([]);
-  const [isLoading1, setIsLoading1] = useState(true)
   const [drinks, setDrinks] = useState([]);
-  const [foods, setFoods] = useState()
-  const makeItem = (name, description, recipe, serve) => {setFoods(foods => [...foods, {name, description, recipe, serve}])}
+  const [foods, setFoods] = useState([])
   
-  useEffect(() => {
-    async function getSnacks() {
-      let snacks = await SnackOrBoozeApi.getSnacks();
-      setSnacks(snacks);
-      setIsLoading(false);
-      console.log(snacks)
-    }
-    getSnacks();
-  
-    async function getDrinks(){
-      let drinks = await SnackOrBoozeApi.getDrinks();
-      setDrinks(drinks)
-      setIsLoading1(false)
-      console.log(drinks)
-    }
-    getDrinks();
-  
-  }, []);
+  // const makeItem = (name, description, recipe, serve) => {setFoods(foods => [...foods, {name, description, recipe, serve}])}
 
-  if (isLoading1) {
-    return <p>Loading &hellip;</p>;
+  
+  useEffect(()=>{
+    getDrinks();
+    getSnacks();
+  },
+  []);
+  
+  async function getDrinks() {
+    try {
+    let drinks1 = await SnackOrBoozeApi.getDrinks();
+    setDrinks(db['drinks'])
+    console.log(db['drinks'])
+    return drinks
+  }
+  catch (e) {
+    console.log(e)
+  }
+}
+  async function getSnacks() {
+    try {
+    let snacks1 = await SnackOrBoozeApi.getSnacks();
+    setSnacks(db['snacks']);
+    console.log(db['snacks'])
+    return snacks
+  }
+  catch (e) {
+    console.log(e)
+  }
   }
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <NavBar />
+
+<BrowserRouter>
+<NavBar /> 
         <main>
-          <Switch>
-            <Route exact path="/">
-              <Home snacks={snacks} />
+          <Routes>
             
-              <Home drinks={drinks}/>
+            <Route exact path= '/' element ={<Home />}/>
+            <Route exact path= "/snacks" element={<MenuComponentSnack  />}/>
+            <Route exact path= "/drinks" element={<MenuComponentDrink />}/>
+            <Route exact path= '/menu/:id' element = {<ItemComponent />}/> 
             
-            </Route>
-            <Route exact path="/snacks">
-            {snacks.map(c => (
-              <MenuComponent
-              key={c.key}
-              name = {c.name}
-              id = {c.id}
-             />))}
-            </Route>
-            <Route exact path= "/drinks">
-            {drinks.map(c => (
-              <MenuComponent 
-              key = {c.key}
-              name= {c.name}
-              id={c.id}
-            />))}
-            </Route>
-           
-            <Route exact path='/snacks/id' element = {<ItemComponent key = {snacks.key}id = {snacks.id}
-            description ={snacks.description} recipe={snacks.description} serve= {snacks.serve}
-            />}/>
-        
-       
-            <Route exact path="/drinks/id" element= {<ItemComponent key = {drinks.key} id = {drinks.id} description= {drinks.description} recipe= {drinks.recipe} serve= {drinks.serve} />}/>
-           
-            <Route exact path= "/addItem" element = {<ItemForm />} />
-             
             
-              <p>Hmmm. I can't seem to find what you want.</p>
-            
-          </Switch>
+          </Routes>
         </main>
-      </BrowserRouter>
+        {/* <ItemForm makeItem={makeItem}/> */}
+          </BrowserRouter>
+        
+      <ItemForm />
+
+       
+        
+
     </div>
   );
 }

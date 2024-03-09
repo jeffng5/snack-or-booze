@@ -26,10 +26,18 @@ form {
 }
 
 .item-title {
-  padding-right: 10px;
   text-align: center;
 }
 
 span {
   color: black;
+}
+
+.col-md-4 {
+  width: 700px;
+  text-align: center;
+}
+
+h4 {
+  color: blue;
 }
